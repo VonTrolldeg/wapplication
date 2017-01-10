@@ -1,0 +1,67 @@
+
+body {
+	background-color: #FFFFFF;
+
+}
+
+.title {
+	background: #fff;
+	border: 1px solid black;
+	color: #000;
+	border-radius: 10px;
+}
+
+#form {
+	padding: 5px;
+	text-align: center;
+}
+
+.dropdown {
+	margin: 15px 15px;
+}
+#movie-list {
+	padding: 5px;
+}
+
+li {
+	border: 1px solid black;
+	border-radius: 5px;
+	list-style-type: none;
+}
+#movieName {
+	margin: 3px;
+}
+.movieSearch {
+	margin: 5px;
+	text-align: center;
+}
+
+.arkiv{
+	margin: 5px;
+	width: 200px;
+}
+.favorit{
+	margin: 5px;
+	width: 200px;
+}
+.favvofilm{
+	clear: both;
+	color: #FFF;
+	margin-bottom: 0px;
+}
+#favfilm{
+}
+#bs-example-navbar-collapse-1{
+	padding: 0px;
+}
+@media screen and (min-width: 920px){
+/*Desktop version*/
+
+}
+@media screen and (max-width: 920px) and (min-width: 670px){
+/*Tablet version*/
+
+}
+@media screen and (max-width: 670px){
+/*Mobile version*/
+}
