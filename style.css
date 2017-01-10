@@ -1,0 +1,46 @@
+.greyBG {
+    text-align: center;
+    background: #e8e8e8;
+}
+
+.blueBG {
+    text-align: center;
+    background-image: url("blue.gif");
+     background-repeat: no-repeat;
+     background-position: center;
+    padding: 20%;
+}
+
+.darkBG {
+    background: #404344;
+}
+
+#weather {
+
+}
+#favorite {
+}
+
+#film {
+
+}
+
+#whatMedia {
+}
+
+.filmDisplay {
+    text-align: center;
+    background: #e8e8e8;
+    border: 2px solid #4ca2ff;
+    padding: 20px;
+}
+
+.textleft {
+    padding: 0;
+    text-align: left;
+}
+
+.textright {
+    padding: 0;
+    text-align: right;
+}
