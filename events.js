@@ -24,8 +24,7 @@ $("#viewMedia").on("click", function() {
 
 
 $("#searchFilm").on("click", function() {
-    var inputFilm = $("#inputFilm").val();
-    serachFilm(inputFilm);
+    serachFilm();
     $("#search").show();
     $("#result").hide();
     $("#favourite").hide();
@@ -33,8 +32,19 @@ $("#searchFilm").on("click", function() {
 
 });
 
+/*
+$("#inputFilm").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#id_of_button").click();
+    }
+});
+*/
+
+
 $("#viewFavourite").on("click", function() {
     //show favourite movie
+    console.log("on click view ");
+    viewFavourite()
     $("#result").hide();
     $("#favourite").show();
     $("#search").hide();
@@ -42,6 +52,7 @@ $("#viewFavourite").on("click", function() {
 });
 
 $("#viewArchive").on("click", function() {
+    $("#viewArchive").css("background-color", "red");
     //show results at the moment
     //TODO build archive view
     displayArchive();
@@ -70,3 +81,14 @@ $("#remove").on("click", function() {
     //look for number in id
     removeFilm();
 });
+
+$("#makeFavourite").on("click", function() {
+    makeFavourite();
+});
+
+$("#1").on("click", function() {
+    console.log("click remove");
+    var number = this.attr("id");
+    console.log(number);
+    removeFilm(number);
+})
