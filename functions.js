@@ -41,22 +41,21 @@ function filmSetUp() {
     $("#archive").hide();
 }
 
-function serachFilm() {
+function searchFilm(userInput) {
     //TODO get the searchtext from the user and serach for that
-    var search = $("#name").val();
-    console.log(search);
+
     //calling the api with the parameters t and r titel and type
     $.ajax({
         url:"https://www.omdbapi.com/?",
         data:{
-            t:"zootopia",
+            t:'"' + userInput + '"',
             r: "json"
         }
     }).done(function(object) {
         //check the network tab in panel for more info
         displayResult(object);
     }).fail(function(object) {
-        console.log("could not find the film you were loking for");
+        console.log("could not find the film you were looking for");
     });
 }
 
@@ -78,7 +77,6 @@ function displayResult(movieObject) {
 }
 
 function saveToArchive() {
-
     //gets the info about the film and saves it to the archive
     //TODO see if the film already exits
     //var savePicture = $("#picture").attr("src");
@@ -133,22 +131,16 @@ function makeFavourite() {
 }
 
 function viewFavourite() {
-    console.log("rund teh function");
     //get the favourite titel
     var favouriteFilm = JSON.parse(localStorage.getItem("favourite"));
-    console.log(favouriteFilm);
     if (favouriteFilm != undefined) {
-        console.log($("#titel"));
         $("#titel").text(favouriteFilm.titel);
         $("#year").text(favouriteFilm.year);
         $("#runTime").text("Runtime: " + favouriteFilm.time);
-
-
     }
 }
 
 function removeFilm(number) {
-    console.log("runs remove function");
     //find the film on that spot and remove it
     var archivedFilms = JSON.parse(localStorage.getItem("archive"));
 
@@ -156,7 +148,6 @@ function removeFilm(number) {
             archivedFilms.splice(number, 1);
     }
     //set the new object to local storage
-    console.log(archivedFilms);
     var JSONArchive = JSON.stringify(archivedFilms);
     localStorage.setItem("archive", JSONArchive);
 
@@ -165,6 +156,7 @@ function removeFilm(number) {
 /*
 geolocation
 */
+/*
 navigator.geolocation.getCurrentPosition(onSuccess, onFail, {});
 
 function onSuccess(position){
@@ -185,3 +177,4 @@ function getWeather(lati, longi) {
 
     });
 }
+*/

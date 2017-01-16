@@ -24,7 +24,6 @@ $("#viewMedia").on("click", function() {
 
 
 $("#searchFilm").on("click", function() {
-    serachFilm();
     $("#search").show();
     $("#result").hide();
     $("#favourite").hide();
@@ -43,7 +42,6 @@ $("#inputFilm").keyup(function(event){
 
 $("#viewFavourite").on("click", function() {
     //show favourite movie
-    console.log("on click view ");
     viewFavourite()
     $("#result").hide();
     $("#favourite").show();
@@ -63,6 +61,8 @@ $("#viewArchive").on("click", function() {
 });
 
 $("#magnifier").on("click", function() {
+    var input = $("#inputFilm").val();
+    searchFilm(input);
     //show results
     $("#result").show();
     $("#favourite").hide();
@@ -91,4 +91,8 @@ $("#1").on("click", function() {
     var number = this.attr("id");
     console.log(number);
     removeFilm(number);
+})
+
+$("#uploadMedia").on("click", function() {
+  
 })
