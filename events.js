@@ -6,6 +6,8 @@ $( document ).ready(function() {
     if( document.getElementById("film")) {
         filmSetUp();
     }
+    
+    navigator.geolocation.getCurrentPosition(onSuccess, onFail, {});
 });
 
 $("#navFilm").on("click", function() {
@@ -94,5 +96,5 @@ $("#1").on("click", function() {
 })
 
 $("#uploadMedia").on("click", function() {
-  
+
 })

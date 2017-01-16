@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mimmis sida</title>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link  rel = "icon"  sizes = "192x192"  href = "icon.png" > 
+</head>
+<body>
+  <header class ="container">
+    <div class="row">
+		<h1 class="col-sm-4">Filmer</h1>
+		<nav class="col-sm-8 text-right">
+			<a href="movieLib.html">Filmbibliotek</a>
+			<a href="weather.html">Väder</a>
+			<a href="media.html">Media</a>
+		</nav>
+     </div>
+  </header>
+  
+  <section class="jumbotron">
+    <div class="container">
+      <div class="row text-center">
+	  
+        <h2> Sök efter en film</h2>
+        <input type="text" name="search" id="search" value="">
+		<a class="btn btn-success" id="get-movie" role="button">Sök film!</a>
+        </div>
+		
+    </div>
+    </section>
+  
+  <section class="container">
+  
+	
+		<div id="right">
+			<h3>Din Favoritfilm</h3>
+				<div id='favMovie'></div>
+		</div>
+		
+		<div id='results'></div>
+ 
+  
+
+    
+  </section>
+	<footer class="container">
+		<div class="row">
+			<p class="col-sm-4">&copy; 2016 Mimmi Castmo</p>      
+		</div>
+	</footer>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="moviescript.js"></script>
+</body>
+</html>

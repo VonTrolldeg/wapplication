@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Fånga Media </title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="mediastyle.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+		<script src="http://malsup.github.com/jquery.form.js"></script>
+		<script src="//oss.maxcdn.com/jquery.form/3.50/jquery.form.min.js"></script>
+		<link  rel = "icon"  sizes = "192x192"  href = "icon.png" > 
+	</head>
+	
+<body>
+	<header class ="container">
+			<div class="row">
+				<h1 class="col-sm-4">Carpe Media</h1>
+				<nav class="col-sm-8 text-right">
+					<a href="index.html">Start</a>
+					<a href="movieLib.html">Filmbibliotek</a>
+					<a href="weather.html">Väder</a>
+					<a href="media.html">Media</a>
+				</nav>
+			</div>
+	</header>
+  
+	<div id="media">
+		<h1> Media</h1>
+			<form action="server.php" enctype="multipart/form-data" method="post" id="myForm">
+				<select id="type" name="type">
+				  <option value="">Välj typ här</option>
+				  <option value="photo">Foto</option>
+				  <option value="video">Video</option>
+				  <option value="audio">Ljud</option>
+				</select>
+				<input type="file" name="media" class="file-btn" id="pic">
+				<strong>Döp din fil:</strong><input type="text" name="title">
+				<br>
+			  
+				<input type="submit" id ="upload" value="Upload" class="btn">
+			</form>
+			<div id="status"></div >
+					
+	</div>
+	
+			
+	
+		<select id="show">
+			  <option value="">Alla filer</option>
+			  <option value="photo">Foto</option>
+			  <option value="video">Video</option>
+			  <option value="audio">Ljud</option>
+		</select>
+			<div id="resultat"></div>
+			
+			
+	<footer class="container">
+		<div class="row">
+			<p class="col-sm-4">&copy; 2016 Mimmi Castmo</p>      
+		</div>
+	</footer>	
+	
+	<script src="mediascript.js"></script>   
+	</body>
+</html>

@@ -156,14 +156,13 @@ function removeFilm(number) {
 /*
 geolocation
 */
-/*
-navigator.geolocation.getCurrentPosition(onSuccess, onFail, {});
+
+
 
 function onSuccess(position){
-  // "position" är ett objekt som innehåller vår platsinfo
-  // Vi loggar var position (titta i loggen vad som händer)
+  // position is an object that
+  // get the position in latitude and longitude whe nthe user accepts it
   var lati = position.coords.latitude;
-
   var longi = position.coords.longitude;
   getWeather(lati, longi);
 }
@@ -172,9 +171,38 @@ function onFail(){
   console.log("Vi kunde tyvärr inte hämta din plats just nu.");
 }
 
-function getWeather(lati, longi) {
-    $getJSON("https://api.openweathermap.org/data/2.5/weather?lat="+lati+"&lon="+longi+"&appid=9b046b355c3c4db502a8aa20de792bc9", function (a) {
-
-    });
+/*
+function getLocation(lati, longi) {
+    console.log(lati, longi);
+    var location = $.ajax({
+        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lati + longi + "&sensor=true"
+    }).done(function(locationData) {
+        console.log(locationData);
+    }).fail(function(locationData) {
+        console.log("We could not find your current position");
+    })
 }
 */
+function getWeather(lati, longi) {
+    $.ajax({
+      //type the paramerters for the API lon and at and the API key
+      url:"http://api.openweathermap.org/data/2.5/weather",
+      dataType: "JSON",
+      data:{
+        lat: lati,
+        lon: longi,
+        APPID : "9b046b355c3c4db502a8aa20de792bc9"
+      }
+    }).done(function(data){
+      //check the network tab for more information
+      printWeather(data);
+    }).fail(function(data){
+
+    });
+  };
+
+function printWeather(data) {
+    var data.main.temp
+    console.log(data.weather[0].description);
+
+}

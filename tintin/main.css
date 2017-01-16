@@ -1,0 +1,125 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+header {
+  padding: 10px 0;
+}
+
+
+header h1 {
+  font-weight: 700;
+  margin: 0;
+}
+
+header nav {
+  display: flex;
+}
+
+a {
+	margin: 5px;
+	font-size: 15px;
+}
+
+.info{
+	margin-top:4%;
+}
+
+#wrapper{
+	text-align:center;
+	background-image: url('rainbow.jpg');
+}
+
+
+.jumbotron {
+  display: flex;  
+  background-image: url('filmer.jpg');
+  background-size: cover;
+  color: #000;
+  height: 160px;
+  text-shadow: 0.25px 0.25px 0.25px #000000;
+}
+
+.jumbotron h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+  color: #000;
+}
+
+figure{
+	border: 1px solid white;
+	width: 55%;
+	padding-left: 9px;
+	padding-top: 4px;
+}
+
+img{
+	width: 100px;
+	height:130px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+}
+
+#right{
+	border: 1px solid grey;
+	width: 20%;
+	position:absolute;
+	background-color:#e6e6fa;
+	text-align:center;
+	margin-left:70%;
+	margin-right:2%;
+	border-radius: 10px; 
+}
+
+#right button{
+	float:right;
+}
+
+
+
+footer {
+	border-top:1px solid #999;
+	text-align:center;
+	margin-top: 25%;
+	margin-bottom: 0%;
+}
+
+/* mobil egenskaper */
+@media (max-width: 480px){
+
+.jumbotron {
+  width:100%;
+  background-image: url('filmer.jpg');
+  background-size: cover;
+  color: #000;
+  height: 130px;
+  text-shadow: 0.25px 0.25px 0.25px #000000;
+}
+
+#right{
+margin-left:60%;
+margin-top:0%;
+min-height:8%;
+width:35%;
+}
+
+#right, h3{
+font-size:14px;
+}
+
+figure{
+	border: 1px solid white;
+	width: 45%;
+	padding-left: 1px;
+	padding-top: 1px;
+}
+
+footer {
+	border-top:1px solid #999;
+	text-align:center;
+	margin-top: 85%;
+	margin-bottom: 0%;
+}
+}
