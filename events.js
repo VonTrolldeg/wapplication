@@ -1,13 +1,24 @@
 
 $( document ).ready(function() {
+    //run setup functions for each site
     if( document.getElementById("uploadMedia")) {
         mediaSetUp();
     }
     if( document.getElementById("film")) {
         filmSetUp();
     }
-    
+    //get teh current position
     navigator.geolocation.getCurrentPosition(onSuccess, onFail, {});
+
+    //uoload media
+    $("#mediaForm").on("submit", function(e) {
+      e.preventDefault();
+      $("#mediaForm").ajaxSubmit(function(dataObject) {
+        //logging data
+        console.log(dataObject);
+      })
+    })
+
 });
 
 $("#navFilm").on("click", function() {
@@ -88,13 +99,28 @@ $("#makeFavourite").on("click", function() {
     makeFavourite();
 });
 
+/*
 $("#1").on("click", function() {
     console.log("click remove");
     var number = this.attr("id");
     console.log(number);
     removeFilm(number);
 })
-
+*/
 $("#uploadMedia").on("click", function() {
+  //get the value from
+  var mediaType =
+  mediaFromServer(mediatype);
+});
 
-})
+$("#pictureButton").on("click", function() {
+  mediaFromServer("photo");
+});
+
+$("#videoButton").on("click", function() {
+  mediaFromServer("video");
+});
+
+$("#audioButton").on("click", function() {
+  mediaFromServer("audio");
+});

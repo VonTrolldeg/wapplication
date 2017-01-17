@@ -41,6 +41,42 @@ function filmSetUp() {
     $("#archive").hide();
 }
 
+/*
+mimmis sökningsfunktion som visar flera resultat och appendar knappar
+/*
+$("#get-movie").on("click", function(){
+	$('#results').html("");
+	var input = $("#search").val();
+		//hämtar api
+		$.ajax({
+		url: "http://www.omdbapi.com/?t=" + input,
+		type: "get",
+		dataType: "JSON",
+		data: {
+			s: input
+		},
+
+
+	}).done(function(results){
+	//för varje film i arrayen så kommer de läggas till som en lista i html-dok.//
+
+		if(results.Response == "True"){
+			$.each(results["Search"], function(index, movie){
+				 var title = movie["Title"];
+				 var year = movie["Year"];
+				 var cover = movie["Poster"];
+				 $('#results').append("<figure> <img src=" + cover + " class='bilder' >" + title + " (" + year + ")<br/> <button class='fav btn btn-info' id='"+title+"'>Favorit</button> <button class='save btn btn-info' id='"+title+"'>Arkiv</button> </figure>");
+
+			});
+
+		}else {
+			$('#results').append('<p>'+results.Error+"</p>");
+		};
+		event.preventDefault();
+	});
+});
+*/
+
 function searchFilm(userInput) {
     //TODO get the searchtext from the user and serach for that
 
@@ -156,9 +192,6 @@ function removeFilm(number) {
 /*
 geolocation
 */
-
-
-
 function onSuccess(position){
   // position is an object that
   // get the position in latitude and longitude whe nthe user accepts it
@@ -171,18 +204,7 @@ function onFail(){
   console.log("Vi kunde tyvärr inte hämta din plats just nu.");
 }
 
-/*
-function getLocation(lati, longi) {
-    console.log(lati, longi);
-    var location = $.ajax({
-        url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lati + longi + "&sensor=true"
-    }).done(function(locationData) {
-        console.log(locationData);
-    }).fail(function(locationData) {
-        console.log("We could not find your current position");
-    })
-}
-*/
+
 function getWeather(lati, longi) {
     $.ajax({
       //type the paramerters for the API lon and at and the API key
@@ -202,7 +224,53 @@ function getWeather(lati, longi) {
   };
 
 function printWeather(data) {
-    var data.main.temp
-    console.log(data.weather[0].description);
-
+    var kelvin = data.main.temp;
+    var description = data.weather[0].description;
+    var celcius = (kelvin - 273.15);
+    var temp = celcius.toFixed(1);
+    $("#description").html(description);
+    $("#temp").html(temp + " degrees celcius");
 }
+
+/*
+media
+*/
+
+function mediaFromServer(mediaType){
+    $.ajax({
+      //call the server with its url and parameterns - action and mediatype
+      url:"server.php",
+      data:{
+        action: "getMedia",
+        type: mediaType
+      },
+      dataType: "JSON"
+
+    }).done(function(dataObject){
+      //run the function that prints the media to the webpage
+      displayMedia(dataObject);
+
+    }).fail(function(dataObject){
+      console.log("Could not load the selected mediatype from server");
+    });
+  };
+
+function displayMedia(dataObject){
+  //forloop som går igenom aalla filer, en ifsats som går igenom alla type och jämför den med den som användaren vill ha
+  //loop through all the files
+    for(var i = 0; i < dataObject.files.length; i++ ){
+      if(data.files[i].type == "photo"){
+        $("#").append('<img src="' + data.files[i].path + '"/>');
+      }
+      else if (dataObject.files[0].type == "audio") {
+        //ladda in en
+          $("#").append('<audio controls><source src="horse.ogg" type="audio/ogg"><source src="horse.mp3" type="audio/mpeg">Your browser does not support the audio tag.</audio>')
+      }
+      else if (dataObject.files[0].type == "video") {
+        $("#").append('video width="320" height="240" autoplay> <source src="{{HÄR SKA VIDEON IN}}" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>')
+      }
+    };
+
+    //$("article").append('<img src="' + data.files[0].path + '"/>');
+    //$("#year").text(film.Year);
+};

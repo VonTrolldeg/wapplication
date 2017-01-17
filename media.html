@@ -59,27 +59,32 @@
                 <div id="whatMedia"class="row">
                     <div class="btn-group col-md-12">
                         <div class="col-md-4 text-center">
-	                       <button type="button" id="pictures" class="btn btn-default custom-button-width">Pictures</button>
+	                       <button type="button" id="pictureButton" class="btn btn-default custom-button-width">Pictures</button>
                        </div>
                        <div class="col-md-4 text-center">
-                          <button type="button" class="btn btn-default custom-button-width">Video</button>
+                          <button type="button" id="videoButton" class="btn btn-default custom-button-width">Video</button>
                       </div>
                       <div class="col-md-4 text-center">
-                         <button type="button" class="btn btn-default custom-button-width">Audio</button>
+                         <button type="button" id="audioButton" class="btn btn-default custom-button-width">Audio</button>
                      </div>
                     </div>
                 </div>
           </div>
           <div id="uploading" class="container">
             <div class="row">
-              <form action="server.php" enctype="multipart/form-data" method="post" class="">
+              <form action="server.php" enctype="multipart/form-data" method="post" id="mediaForm">
                 <select name="type">
-                <option value="">Välj typ här</option>
-                <option value="photo">Foto</option>
-                <option value="video">Video</option>
-                <option value="audio">Ljud</option>
+                <option value="">select media type</option>
+                <option value="photo">photo</option>
+                <option value="video">video</option>
+                <option value="audio">audio</option>
                 </select>
+                <input type="file" name="media" class="btn">
+                <input type="submit" value="Spara media" class="btn">
               </form>
+              <div class="col-md-4 text-center">
+                 <button type="button" id="upload" class="btn btn-default custom-button-width">Upload</button>
+             </div>
             </div>
           </div>
 
