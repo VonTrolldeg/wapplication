@@ -71,23 +71,25 @@
                 </div>
           </div>
           <div id="uploading" class="container">
-            <div class="row">
-              <form action="server.php" enctype="multipart/form-data" method="post" id="mediaForm">
-                <select name="type">
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="file" name="media" class="btn btn-default">
+              </div>
+              <select name="type" class="form-control">
                 <option value="">select media type</option>
                 <option value="photo">photo</option>
                 <option value="video">video</option>
                 <option value="audio">audio</option>
-                </select>
-                <input type="file" name="media" class="btn">
-                <input type="submit" value="Spara media" class="btn">
-              </form>
-              <div class="col-md-4 text-center">
-                 <button type="button" id="upload" class="btn btn-default custom-button-width">Upload</button>
-             </div>
-            </div>
+              </select>
+              <button type="submit" id="saveMedia" value="Spara media" class="btn btn-default">Submit</button>
+            </form>
           </div>
 
+          <div id="statusDiv" class="container">
+            <div class="row">
+              <h2 id="status"></h2>
+            </div>
+          </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="functions.js"></script>
         <script type="text/javascript" src="events.js"></script>

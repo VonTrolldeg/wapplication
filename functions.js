@@ -30,9 +30,10 @@ function printMovies(){
 
 function mediaSetUp() {
     $("#whatMedia").hide();
+    $("#uploading").hide();
     $("#media").show();
-}
 
+}
 
 function filmSetUp() {
     $("#favourite").hide();
@@ -43,6 +44,8 @@ function filmSetUp() {
 
 /*
 mimmis sökningsfunktion som visar flera resultat och appendar knappar
+*/
+
 /*
 $("#get-movie").on("click", function(){
 	$('#results').html("");
@@ -237,6 +240,7 @@ media
 */
 
 function mediaFromServer(mediaType){
+  console.log(mediaType);
     $.ajax({
       //call the server with its url and parameterns - action and mediatype
       url:"server.php",
@@ -248,14 +252,19 @@ function mediaFromServer(mediaType){
 
     }).done(function(dataObject){
       //run the function that prints the media to the webpage
-      displayMedia(dataObject);
+      console.log(dataObject);
+      //parse the object to json format
+      var jsonFiles = JSON.parse(dataObject);
+      var allFiles = jsonFiles.files;
+      displayMedia(allFiles);
 
     }).fail(function(dataObject){
       console.log("Could not load the selected mediatype from server");
     });
   };
 
-function displayMedia(dataObject){
+function displayMedia(allFiles){
+  console.log(allFiles);
   //forloop som går igenom aalla filer, en ifsats som går igenom alla type och jämför den med den som användaren vill ha
   //loop through all the files
     for(var i = 0; i < dataObject.files.length; i++ ){
@@ -274,3 +283,24 @@ function displayMedia(dataObject){
     //$("article").append('<img src="' + data.files[0].path + '"/>');
     //$("#year").text(film.Year);
 };
+
+function uploadMedia() {
+  $('#mediaForm').ajaxSubmit({
+    success: function(data) {
+      console.log(data); // se exempelsvar nedan
+      $('#mediaForm')[0].reset();
+      console.log("the file is saved in the database");
+    },
+  //felhantering, om uppladdningen misslyckas visas detta felmeddelande.
+    error: function() {
+      console.log("something went wrong");
+    },
+  //använder ett plugin, visar uppladdningen i procent.
+    uploadProgress: function(event, position, total, percent) {
+      $("#status").text("Filen laddas upp: " + percent + "% klart av 100%");
+      if (percent == 100){
+        $('#status').text("");
+      }
+    }
+  });
+}

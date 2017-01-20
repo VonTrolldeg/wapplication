@@ -13,12 +13,8 @@ $( document ).ready(function() {
     //uoload media
     $("#mediaForm").on("submit", function(e) {
       e.preventDefault();
-      $("#mediaForm").ajaxSubmit(function(dataObject) {
-        //logging data
-        console.log(dataObject);
-      })
-    })
-
+      uploadMedia();
+  });
 });
 
 $("#navFilm").on("click", function() {
@@ -107,13 +103,18 @@ $("#1").on("click", function() {
     removeFilm(number);
 })
 */
+
 $("#uploadMedia").on("click", function() {
+  $("#uploading").show();
+/*
   //get the value from
   var mediaType =
   mediaFromServer(mediatype);
+  */
 });
 
 $("#pictureButton").on("click", function() {
+  console.log("picture");
   mediaFromServer("photo");
 });
 
