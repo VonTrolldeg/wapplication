@@ -18,6 +18,10 @@ $( document ).ready(function() {
 });
 
 $("#navFilm").on("click", function() {
+    //set class to active
+    $("#navFilm").addClass("active");
+    $("#navWeather").removeClass("active");
+    $("#navMedia").removeClass("active");
     $("#film").show();
     $("#search").hide();
 

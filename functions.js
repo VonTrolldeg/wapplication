@@ -81,8 +81,10 @@ $("#get-movie").on("click", function(){
 */
 
 function searchFilm(userInput) {
-    //TODO get the searchtext from the user and serach for that
-
+    //empty all the posts
+    $("#Titel").html("");
+    $("#Year").html("");
+    $("#RunTime").html("");
     //calling the api with the parameters t and r titel and type
     $.ajax({
         url:"https://www.omdbapi.com/?",
@@ -92,6 +94,13 @@ function searchFilm(userInput) {
         }
     }).done(function(object) {
         //check the network tab in panel for more info
+        if (movieObject.respons == "True") {
+
+        }
+        else {
+            //TODO print this on the page somewhere
+            console.log(object.Error);
+        }
         displayResult(object);
     }).fail(function(object) {
         console.log("could not find the film you were looking for");
@@ -99,11 +108,14 @@ function searchFilm(userInput) {
 }
 
 function displayResult(movieObject) {
-    //append the movie information to the html
-    $("#Titel").append(movieObject.Title);
-    $("#Year").append(movieObject.Year);
-    $("#RunTime").append("Runtime: " + movieObject.Runtime);
-
+    //add the movie information to the html
+    $.each(movieObject["Search"], function(index, movie){
+        //TODO Add one HTML object for each film
+        //var cover = movie["Poster"];
+        $("#Titel").html(movieObject.Title);
+        $("#Year").html(movieObject.Year);
+        $("#RunTime").html("Runtime: " + movieObject.Runtime);
+    });
     //checks whats already in the archive nad disables teh option if the film is already saved
     var archivedFilms = JSON.parse(localStorage.getItem("archive"));
     if (archivedFilms != undefined) {
