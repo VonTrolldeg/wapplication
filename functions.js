@@ -32,7 +32,7 @@ function mediaSetUp() {
     $("#whatMedia").hide();
     $("#uploading").hide();
     $("#media").show();
-
+    $("#viewing").hide();
 }
 
 function filmSetUp() {
@@ -42,80 +42,49 @@ function filmSetUp() {
     $("#archive").hide();
 }
 
-/*
-mimmis sökningsfunktion som visar flera resultat och appendar knappar
-*/
-
-/*
-$("#get-movie").on("click", function(){
-	$('#results').html("");
-	var input = $("#search").val();
-		//hämtar api
-		$.ajax({
-		url: "http://www.omdbapi.com/?t=" + input,
-		type: "get",
-		dataType: "JSON",
-		data: {
-			s: input
-		},
-
-
-	}).done(function(results){
-	//för varje film i arrayen så kommer de läggas till som en lista i html-dok.//
-
-		if(results.Response == "True"){
-			$.each(results["Search"], function(index, movie){
-				 var title = movie["Title"];
-				 var year = movie["Year"];
-				 var cover = movie["Poster"];
-				 $('#results').append("<figure> <img src=" + cover + " class='bilder' >" + title + " (" + year + ")<br/> <button class='fav btn btn-info' id='"+title+"'>Favorit</button> <button class='save btn btn-info' id='"+title+"'>Arkiv</button> </figure>");
-
-			});
-
-		}else {
-			$('#results').append('<p>'+results.Error+"</p>");
-		};
-		event.preventDefault();
-	});
-});
-*/
-
 function searchFilm(userInput) {
     //empty all the posts
     $("#Titel").html("");
     $("#Year").html("");
     $("#RunTime").html("");
     //calling the api with the parameters t and r titel and type
+
     $.ajax({
         url:"https://www.omdbapi.com/?",
         data:{
             t:'"' + userInput + '"',
             r: "json"
         }
-    }).done(function(object) {
+    }).done(function(movieObject) {
         //check the network tab in panel for more info
-        if (movieObject.respons == "True") {
-
-        }
-        else {
-            //TODO print this on the page somewhere
-            console.log(object.Error);
-        }
-        displayResult(object);
-    }).fail(function(object) {
+        console.log(movieObject);
+        displayResult(movieObject);
+    }).fail(function(movieObject) {
         console.log("could not find the film you were looking for");
     });
 }
 
 function displayResult(movieObject) {
     //add the movie information to the html
+    /*
+    //TODO VAFAN kan jag inte hitta search och alla svaren fär?!
+    for (var i = 0; i < movieObject.Search.length; i++) {
+      console.log(movieObject.Search[i]);
+    }
     $.each(movieObject["Search"], function(index, movie){
+      console.log("hej " + index);
         //TODO Add one HTML object for each film
         //var cover = movie["Poster"];
         $("#Titel").html(movieObject.Title);
         $("#Year").html(movieObject.Year);
         $("#RunTime").html("Runtime: " + movieObject.Runtime);
     });
+    */
+    $("#picture").attr('src="'+ movieObject["Poster"] + '"');
+    $("#Titel").html(movieObject.Title);
+    $("#Year").html(movieObject.Year);
+    $("#RunTime").html("Runtime: " + movieObject.Runtime);
+
     //checks whats already in the archive nad disables teh option if the film is already saved
     var archivedFilms = JSON.parse(localStorage.getItem("archive"));
     if (archivedFilms != undefined) {
@@ -129,7 +98,6 @@ function displayResult(movieObject) {
 
 function saveToArchive() {
     //gets the info about the film and saves it to the archive
-    //TODO see if the film already exits
     //var savePicture = $("#picture").attr("src");
     var saveTitel = $("#Titel").html();
     var saveYear = $("#Year").html();
@@ -266,6 +234,9 @@ function mediaFromServer(mediaType){
       //run the function that prints the media to the webpage
       console.log(dataObject);
       //parse the object to json format
+
+      var movies = JSON.parse(dataObject);
+      console.log(movies);
       var jsonFiles = JSON.parse(dataObject);
       var allFiles = jsonFiles.files;
       displayMedia(allFiles);
@@ -291,7 +262,7 @@ function displayMedia(allFiles){
         $("#").append('video width="320" height="240" autoplay> <source src="{{HÄR SKA VIDEON IN}}" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>')
       }
     };
-
+    //TODO
     //$("article").append('<img src="' + data.files[0].path + '"/>');
     //$("#year").text(film.Year);
 };
@@ -306,13 +277,6 @@ function uploadMedia() {
   //felhantering, om uppladdningen misslyckas visas detta felmeddelande.
     error: function() {
       console.log("something went wrong");
-    },
-  //använder ett plugin, visar uppladdningen i procent.
-    uploadProgress: function(event, position, total, percent) {
-      $("#status").text("Filen laddas upp: " + percent + "% klart av 100%");
-      if (percent == 100){
-        $('#status').text("");
-      }
     }
   });
 }

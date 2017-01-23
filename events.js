@@ -13,6 +13,24 @@ $( document ).ready(function() {
     //uoload media
     $("#mediaForm").on("submit", function(e) {
       e.preventDefault();
+      $('#mediaForm').ajaxSubmit({
+        success: function(data) {
+          console.log(data); // se exempelsvar nedan
+          $('#mediaForm')[0].reset();
+          console.log("the file is saved in the database");
+        },
+      //felhantering, om uppladdningen misslyckas visas detta felmeddelande.
+        error: function() {
+          console.log("something went wrong");
+        },
+      //använder ett plugin, visar uppladdningen i procent.
+        uploadProgress: function(event, position, total, percent) {
+          $("#status").text("Filen laddas upp: " + percent + "% klart av 100%");
+          if (percent == 100){
+            $('#status').text("");
+          }
+        }
+      });
       uploadMedia();
   });
 });
@@ -27,14 +45,10 @@ $("#navFilm").on("click", function() {
 
 });
 
-$("#pictures").on("click", function() {
-});
-
 $("#viewMedia").on("click", function() {
     $("#media").hide();
     $("#whatMedia").show();
 });
-
 
 $("#searchFilm").on("click", function() {
     $("#search").show();
@@ -43,15 +57,6 @@ $("#searchFilm").on("click", function() {
     $("#archive").hide();
 
 });
-
-/*
-$("#inputFilm").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#id_of_button").click();
-    }
-});
-*/
-
 
 $("#viewFavourite").on("click", function() {
     //show favourite movie
@@ -118,14 +123,19 @@ $("#uploadMedia").on("click", function() {
 });
 
 $("#pictureButton").on("click", function() {
-  console.log("picture");
+  $("#viewing").show();
+  $("#uploading").hide();
   mediaFromServer("photo");
 });
 
 $("#videoButton").on("click", function() {
+  $("#viewing").show();
+  $("#uploading").hide();
   mediaFromServer("video");
 });
 
 $("#audioButton").on("click", function() {
+  $("#viewing").show();
+  $("#uploading").hide();
   mediaFromServer("audio");
 });
