@@ -70,15 +70,17 @@
           <div id="uploading" class="container">
 
             <form id="mediaForm" action="server.php" enctype="multipart/form-data" method="post" class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="file" name="media" class="btn btn-default">
-              </div>
-              <select name="type" class="form-control">
+              <!-- listen to changes in this select and add an accept attribute to the file selector thingy-->
+              <select id="selectType" name="type" class="form-control">
                 <option value="">select media type</option>
                 <option value="photo">photo</option>
                 <option value="video">video</option>
                 <option value="audio">audio</option>
               </select>
+
+              <div id="chooseFile" class="form-group">
+                <p id="replace"> </p>
+              </div>
               <strong>Name your file:</strong><input type="text" name="title">
               <button type="submit" id="saveMedia" value="Spara media" class="btn btn-default">Submit</button>
             </form>
@@ -112,9 +114,10 @@
             </div>
           </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script type="text/javascript" src="functions.js"></script>
-        <script type="text/javascript" src="events.js"></script>
+        <script src="https://malsup.github.io/jquery.form.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="functions.js"></script>
+        <script type="text/javascript" src="events.js?1"></script>
     </body>
 </html>

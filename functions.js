@@ -14,12 +14,6 @@ var archive = [
     }
 ];
 
-function loadArchive(){
-  if (localStorage.getItem("archive")) {
-     var movies = JSON.parse(localStorage.getItem("archive"));
-  }
-}
-
 function printMovies(){
   /* @TODO Skriver ut alla filmerna i vår array "movies" */
   $("ul li").remove();
@@ -46,18 +40,16 @@ function searchFilm(userInput) {
     //empty all the posts
     $("#Titel").html("");
     $("#Year").html("");
-    $("#RunTime").html("");
     //calling the api with the parameters t and r titel and type
 
     $.ajax({
         url:"https://www.omdbapi.com/?",
         data:{
-            t:'"' + userInput + '"',
+            s:'"' + userInput + '"',
             r: "json"
         }
     }).done(function(movieObject) {
         //check the network tab in panel for more info
-        console.log(movieObject);
         displayResult(movieObject);
     }).fail(function(movieObject) {
         console.log("could not find the film you were looking for");
@@ -66,45 +58,44 @@ function searchFilm(userInput) {
 
 function displayResult(movieObject) {
     //add the movie information to the html
-    /*
-    //TODO VAFAN kan jag inte hitta search och alla svaren fär?!
-    for (var i = 0; i < movieObject.Search.length; i++) {
-      console.log(movieObject.Search[i]);
-    }
+    $("#filmDispalyResult").empty();
     $.each(movieObject["Search"], function(index, movie){
-      console.log("hej " + index);
-        //TODO Add one HTML object for each film
-        //var cover = movie["Poster"];
-        $("#Titel").html(movieObject.Title);
-        $("#Year").html(movieObject.Year);
-        $("#RunTime").html("Runtime: " + movieObject.Runtime);
-    });
-    */
-    $("#picture").attr('src="'+ movieObject["Poster"] + '"');
-    $("#Titel").html(movieObject.Title);
-    $("#Year").html(movieObject.Year);
-    $("#RunTime").html("Runtime: " + movieObject.Runtime);
 
-    //checks whats already in the archive nad disables teh option if the film is already saved
-    var archivedFilms = JSON.parse(localStorage.getItem("archive"));
-    if (archivedFilms != undefined) {
-        for (var i = 0; i < archivedFilms.length; i++) {
-            if (archivedFilms[i].titel == movieObject.Title) {
-                $("#saveTo").prop("disabled", true);
-            }
-        }
-    }
+      var title = movie["Title"];
+      var year = movie["Year"];
+      var cover = movie["Poster"];
+      var html = '<div class="filmDisplay col-md-4 col-md-offset-2">' +
+          '<h3>Resulstat</h3>' +
+          '<img id="picture" src="'+ cover +'"alt="poster of your favorite film" height="300px">' +
+          '<div class="row">' +
+          '<div class="textright col-xs-8 col-sm-3 col-md-4">' +
+          '<h3 id="Titel">'+ title +'</h3>'+
+          '</div>' +
+          '<div class="textleft col-xs-2 col-sm-3 col-md-4">' +
+          '<h4 id="Year">' + year +'</h4>' +
+          '</div>' +
+          '<div class="textleft col-xs-0 col-sm-3 col-md-4">' +
+          '</div>' +
+          '<div class="btn-group" role="group" aria-label="Basic example">' +
+          '<button type="button" id="makeFavourite" class="btn btn-primary">make favourite</button>' +
+          '<button type="button" class="saveTo" class="btn btn-primary">save to archive</button>' +
+          '</div>' +
+          '<p id="message"> </p>' +
+          '</div>' +
+          '</div>';
+
+          $("#filmDispalyResult").append(html);
+    });
 }
 
-function saveToArchive() {
+function saveToArchive(filmTitel, filmYear) {
+  console.log(archive);
     //gets the info about the film and saves it to the archive
     //var savePicture = $("#picture").attr("src");
-    var saveTitel = $("#Titel").html();
-    var saveYear = $("#Year").html();
-    var saveTime = $("#RunTime").html();
     //save as an object
-    var saveThis = {titel: saveTitel, year: saveYear, time: saveTime};
+    var saveThis = {titel: filmTitel, year: filmYear};
     archive.push(saveThis);
+    console.log(archive);
     var JSONArchive = JSON.stringify(archive);
     localStorage.setItem("archive", JSONArchive);
 }
@@ -114,8 +105,10 @@ function displayArchive() {
     2 for loop that adds the data from each post in the array to the HTML
     3 add the html snippet to to film.html
     */
-    var archivedFilms = JSON.parse(localStorage.getItem("archive"));
-
+    if (localStorage.getItem("archive")) {
+       var archivedFilms = JSON.parse(localStorage.getItem("archive"));
+    }
+    console.log(archivedFilms);
     if (archivedFilms != undefined) {
         for (var i = 0; i < archivedFilms.length; i++) {
             var html = "<div class='row'>"+
@@ -142,7 +135,6 @@ function makeFavourite() {
     //when you hit favvo movie its supposed to overwrite the current favvo movie
     var favvoTitel = $("#Titel").html();
     var favvoYear = $("#Year").html();
-    var favvoTime = $("#RunTime").html();
     var favouriteThis = {titel: favvoTitel, year: favvoYear, time: favvoTime};
     //add to localStorage
     var JSONfavourite = JSON.stringify(favouriteThis);
@@ -155,11 +147,11 @@ function viewFavourite() {
     if (favouriteFilm != undefined) {
         $("#titel").text(favouriteFilm.titel);
         $("#year").text(favouriteFilm.year);
-        $("#runTime").text("Runtime: " + favouriteFilm.time);
     }
 }
 
 function removeFilm(number) {
+  //TODO titeln är nyckel på filmen jag vill ta bort
     //find the film on that spot and remove it
     var archivedFilms = JSON.parse(localStorage.getItem("archive"));
 
@@ -220,7 +212,6 @@ media
 */
 
 function mediaFromServer(mediaType){
-  console.log(mediaType);
     $.ajax({
       //call the server with its url and parameterns - action and mediatype
       url:"server.php",
@@ -229,18 +220,12 @@ function mediaFromServer(mediaType){
         type: mediaType
       },
       dataType: "JSON"
-
     }).done(function(dataObject){
       //run the function that prints the media to the webpage
       console.log(dataObject);
       //parse the object to json format
-
-      var movies = JSON.parse(dataObject);
-      console.log(movies);
-      var jsonFiles = JSON.parse(dataObject);
-      var allFiles = jsonFiles.files;
+      var allFiles = dataObject.files;
       displayMedia(allFiles);
-
     }).fail(function(dataObject){
       console.log("Could not load the selected mediatype from server");
     });
@@ -250,15 +235,27 @@ function displayMedia(allFiles){
   console.log(allFiles);
   //forloop som går igenom aalla filer, en ifsats som går igenom alla type och jämför den med den som användaren vill ha
   //loop through all the files
-    for(var i = 0; i < dataObject.files.length; i++ ){
-      if(data.files[i].type == "photo"){
+
+  //add as many boxes for media as length of list
+  var html = ("<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+            "<a class='fancybox thumbnail' rel='ligthbox' href='http://placehold.it/800x600.png'>" +
+            "<img class='img-responsive' alt='media file' src='http://placehold.it/320x320'/>" +
+            "</a>" +
+            "</div> <!-- col-6 / end -->") * allFiles.lengt;
+
+    console.log(html);
+
+    for(var i = 0; i < allFiles.lengt; i++ ){
+      if(allFiles[i].type == "photo"){
+        //add img tags to the viewing part and
         $("#").append('<img src="' + data.files[i].path + '"/>');
       }
       else if (dataObject.files[0].type == "audio") {
-        //ladda in en
+        //add audio tags to the viewing part
           $("#").append('<audio controls><source src="horse.ogg" type="audio/ogg"><source src="horse.mp3" type="audio/mpeg">Your browser does not support the audio tag.</audio>')
       }
       else if (dataObject.files[0].type == "video") {
+        //add video tags to the viewing thing
         $("#").append('video width="320" height="240" autoplay> <source src="{{HÄR SKA VIDEON IN}}" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>')
       }
     };
@@ -268,6 +265,7 @@ function displayMedia(allFiles){
 };
 
 function uploadMedia() {
+  //TODO only accept the chosen media type
   $('#mediaForm').ajaxSubmit({
     success: function(data) {
       console.log(data); // se exempelsvar nedan
@@ -279,4 +277,6 @@ function uploadMedia() {
       console.log("something went wrong");
     }
   });
+
+
 }

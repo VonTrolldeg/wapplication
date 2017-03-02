@@ -13,24 +13,6 @@ $( document ).ready(function() {
     //uoload media
     $("#mediaForm").on("submit", function(e) {
       e.preventDefault();
-      $('#mediaForm').ajaxSubmit({
-        success: function(data) {
-          console.log(data); // se exempelsvar nedan
-          $('#mediaForm')[0].reset();
-          console.log("the file is saved in the database");
-        },
-      //felhantering, om uppladdningen misslyckas visas detta felmeddelande.
-        error: function() {
-          console.log("something went wrong");
-        },
-      //använder ett plugin, visar uppladdningen i procent.
-        uploadProgress: function(event, position, total, percent) {
-          $("#status").text("Filen laddas upp: " + percent + "% klart av 100%");
-          if (percent == 100){
-            $('#status').text("");
-          }
-        }
-      });
       uploadMedia();
   });
 });
@@ -88,16 +70,24 @@ $("#magnifier").on("click", function() {
     //var searchtitel = textfield.val();
 });
 
-$("#saveTo").on("click", function() {
-    $("#message").show();
-    saveToArchive();
+$("#filmDispalyResult").on("click", ".saveTo", function() {
+    var titel = $(this).parent().prev().prev().prev().text();
+    console.log(titel);
+
+    var year = $(this).parent().prev().prev().text();
+    console.log(year);
+
+    //$("#message").show();
+
+    saveToArchive(titel, year);
     //feedback when saved
 });
 
-$("#remove").on("click", function() {
-    //remove from archive
-    //look for number in id
-    removeFilm();
+$("#displayArchive").on("click", ".remove", function() {
+  //run this när den
+    var removeThis = $(this).prev().prev().text();
+    console.log(removeThis);
+    removeFilm(removeThis);
 });
 
 $("#makeFavourite").on("click", function() {
@@ -120,6 +110,17 @@ $("#uploadMedia").on("click", function() {
   var mediaType =
   mediaFromServer(mediatype);
   */
+});
+
+$("#selectType").change(function(){
+  var selectedType = $("#selectType").val();
+  if (selectedType == "photo"){
+    //lol error handling
+    selectedType = "image";
+  }
+  console.log(selectedType);
+  var html = '<input type="file" id="replace" name="media" accept="' +selectedType+'/*" class="btn btn-default">';
+  $("#replace").replaceWith(html);
 });
 
 $("#pictureButton").on("click", function() {
