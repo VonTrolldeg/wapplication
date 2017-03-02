@@ -50,9 +50,8 @@ $("#viewFavourite").on("click", function() {
 });
 
 $("#viewArchive").on("click", function() {
-    $("#viewArchive").css("background-color", "red");
+    //$("#viewArchive").css("background-color", "red");
     //show results at the moment
-    //TODO build archive view
     displayArchive();
     $("#archive").show();
     $("#result").hide();
@@ -72,15 +71,9 @@ $("#magnifier").on("click", function() {
 
 $("#filmDispalyResult").on("click", ".saveTo", function() {
     var titel = $(this).parent().prev().prev().prev().text();
-    console.log(titel);
-
     var year = $(this).parent().prev().prev().text();
-    console.log(year);
-
-    //$("#message").show();
-
     saveToArchive(titel, year);
-    //feedback when saved
+    //TODO feedback when saved
 });
 
 $("#displayArchive").on("click", ".remove", function() {

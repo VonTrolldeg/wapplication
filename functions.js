@@ -1,19 +1,4 @@
 
-var archive = [
-    {
-        picture: "bridesmaids.jpg",
-        titel: "Bridesmaids",
-        year: 2011,
-        time: "2h 19min"
-    },
-    {
-        picture: "howTo.jpg",
-        titel: "How to lose a guy in 10 days",
-        year: 2003,
-        time: "1h 56min"
-    }
-];
-
 function printMovies(){
   /* @TODO Skriver ut alla filmerna i vår array "movies" */
   $("ul li").remove();
@@ -89,13 +74,13 @@ function displayResult(movieObject) {
 }
 
 function saveToArchive(filmTitel, filmYear) {
-  console.log(archive);
-    //gets the info about the film and saves it to the archive
-    //var savePicture = $("#picture").attr("src");
-    //save as an object
+    //gets the film titel and year about the film and saves it to the archive
+
+    var archive = JSON.parse(localStorage.getItem("archive"));
+    console.log(archive);
     var saveThis = {titel: filmTitel, year: filmYear};
     archive.push(saveThis);
-    console.log(archive);
+    //saves a new verion of the archive over the old version
     var JSONArchive = JSON.stringify(archive);
     localStorage.setItem("archive", JSONArchive);
 }
@@ -105,10 +90,8 @@ function displayArchive() {
     2 for loop that adds the data from each post in the array to the HTML
     3 add the html snippet to to film.html
     */
-    if (localStorage.getItem("archive")) {
-       var archivedFilms = JSON.parse(localStorage.getItem("archive"));
-    }
-    console.log(archivedFilms);
+    $("#displayArchive").empty();
+    var archivedFilms = JSON.parse(localStorage.getItem("archive"));
     if (archivedFilms != undefined) {
         for (var i = 0; i < archivedFilms.length; i++) {
             var html = "<div class='row'>"+
@@ -116,8 +99,8 @@ function displayArchive() {
                     //"<img src='"+ archive[i].picture +"' alt='picture of film' height='100px'>" +
                 "</div>"+
                 "<div class=' col-sm-4'>"+
-                    "<h4>" + archivedFilms[i].titel + "   " + archivedFilms[i].year + "</h4>" +
-                    "<p>" + archivedFilms[i].time + "</p>" +
+                    "<h3>" + archivedFilms[i].titel + "</h3>" +
+                    "<h4>" + archivedFilms[i].year + "</h4>" +
                 "</div>" +
                 "<div class='col-sm-4'>" +
                     "<button type='button' id='makeFavourite' class='btn btn-primary'>make favourite</button>" +
