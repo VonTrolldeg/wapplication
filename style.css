@@ -1,13 +1,16 @@
+body{
+    background:url('images/weather.png')no-repeat;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .greyBG {
     text-align: center;
     background: #e8e8e8;
 }
 
+
 .blueBG {
     text-align: center;
-    background-image: url("blue.gif");
-     background-repeat: no-repeat;
-     background-position: center;
     padding: 20%;
 }
 

@@ -28,7 +28,7 @@ function searchFilm(userInput) {
     //calling the api with the parameters t and r titel and type
 
     $.ajax({
-        url:"https://www.omdbapi.com/?",
+        url:"http://www.omdbapi.com/?i=tt3896198&apikey=add9ad8f",
         data:{
             s:'"' + userInput + '"',
             r: "json"
@@ -37,6 +37,8 @@ function searchFilm(userInput) {
         //check the network tab in panel for more info
         displayResult(movieObject);
     }).fail(function(movieObject) {
+        $("#filmDispalyResult").empty();
+        $("#filmDispalyResult").html("Something went wrong when we were looking for your film");
         console.log("could not find the film you were looking for");
     });
 }
@@ -205,7 +207,6 @@ function mediaFromServer(mediaType){
       dataType: "JSON"
     }).done(function(dataObject){
       //run the function that prints the media to the webpage
-      console.log(dataObject);
       //parse the object to json format
       var allFiles = dataObject.files;
       displayMedia(allFiles);
@@ -215,49 +216,54 @@ function mediaFromServer(mediaType){
   };
 
 function displayMedia(allFiles){
-  console.log(allFiles);
-  //forloop som går igenom aalla filer, en ifsats som går igenom alla type och jämför den med den som användaren vill ha
-  //loop through all the files
-
   //add as many boxes for media as length of list
-  var html = ("<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
-            "<a class='fancybox thumbnail' rel='ligthbox' href='http://placehold.it/800x600.png'>" +
-            "<img class='img-responsive' alt='media file' src='http://placehold.it/320x320'/>" +
-            "</a>" +
-            "</div> <!-- col-6 / end -->") * allFiles.lengt;
+  $("#gallery").empty();
 
-    console.log(html);
+      for (var i = 0; i < allFiles.length; i++) {
+          //gets the title from this object
+          var title = allFiles[i].title;
 
-    for(var i = 0; i < allFiles.lengt; i++ ){
-      if(allFiles[i].type == "photo"){
-        //add img tags to the viewing part and
-        $("#").append('<img src="' + data.files[i].path + '"/>');
-      }
-      else if (dataObject.files[0].type == "audio") {
-        //add audio tags to the viewing part
-          $("#").append('<audio controls><source src="horse.ogg" type="audio/ogg"><source src="horse.mp3" type="audio/mpeg">Your browser does not support the audio tag.</audio>')
-      }
-      else if (dataObject.files[0].type == "video") {
-        //add video tags to the viewing thing
-        $("#").append('video width="320" height="240" autoplay> <source src="{{HÄR SKA VIDEON IN}}" type="video/mp4"> <source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag. </video>')
-      }
-    };
-    //TODO
-    //$("article").append('<img src="' + data.files[0].path + '"/>');
-    //$("#year").text(film.Year);
-};
+          if(allFiles[i].type == "photo"){
+             //collects the image and the title in variables
+             var img = "<img src=" + allFiles[i].path + " width='320' >";
+             //puts variables in the HTML
+             $("#gallery").append(
+               "<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+               "<figure class='img'>" + img + "<p>" + title + "</p></figure>" +
+               "</a>" +
+               "</div> <!-- col-6 / end -->");
+           }
+           else if(allFiles[i].type == "audio"){
+               $("#gallery").append(
+                   "<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+                   "<figure class='img'>" + "<img src='images/audioIcon.jpg' width='320' ></figure>" +
+                   "<audio controls><source src='" + allFiles[i].path + "' type='audio/mpeg'>Your browser does not support the audio tag.</audio>" +
+                   "<p>" + title + "</p>" +
+                 "</a>" +
+                 "</div> <!-- col-6 / end -->");
+           }
+           else if (allFiles[i].type == "video"){
+               $("#gallery").append(
+                   "<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+                   "<video class='vid' controls><source src='" + allFiles[i].path + "' type='video/mp4'></video>" +
+                   "<p>" + title + "</p>"+
+                   "</a>" +
+                   "</div> <!-- col-6 / end -->");
+           }
+       }
+}
 
 function uploadMedia() {
-  //TODO only accept the chosen media type
-  $('#mediaForm').ajaxSubmit({
+    //search for the media type in the database
+    $('#mediaForm').ajaxSubmit({
     success: function(data) {
-      console.log(data); // se exempelsvar nedan
       $('#mediaForm')[0].reset();
+      $('#status').html("Upload done!");
       console.log("the file is saved in the database");
     },
-  //felhantering, om uppladdningen misslyckas visas detta felmeddelande.
+    //felhantering, om uppladdningen misslyckas visas detta felmeddelande.
     error: function() {
-      console.log("something went wrong");
+      $('#status').html("Something with the upload went wrong");
     }
   });
 

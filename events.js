@@ -9,12 +9,19 @@ $( document ).ready(function() {
     }
     //get teh current position
     navigator.geolocation.getCurrentPosition(onSuccess, onFail, {});
-
-    //uoload media
-    $("#mediaForm").on("submit", function(e) {
+//uoload media
+$("#mediaForm").on("submit", function(e) {
       e.preventDefault();
       uploadMedia();
+      $("#replace").delete();
   });
+});
+
+$("li").on("click", function(){
+    console.log("kör den ens det här?!");
+   var hej = $("li").find(".active") //.removeClass("active");
+   console.log(hej);
+   $(this).addClass("active");
 });
 
 $("#navFilm").on("click", function() {
@@ -29,7 +36,9 @@ $("#navFilm").on("click", function() {
 
 $("#viewMedia").on("click", function() {
     $("#media").hide();
+    $("#uploading").hide();
     $("#whatMedia").show();
+
 });
 
 $("#searchFilm").on("click", function() {
@@ -87,22 +96,8 @@ $("#makeFavourite").on("click", function() {
     makeFavourite();
 });
 
-/*
-$("#1").on("click", function() {
-    console.log("click remove");
-    var number = this.attr("id");
-    console.log(number);
-    removeFilm(number);
-})
-*/
-
 $("#uploadMedia").on("click", function() {
   $("#uploading").show();
-/*
-  //get the value from
-  var mediaType =
-  mediaFromServer(mediatype);
-  */
 });
 
 $("#selectType").change(function(){
