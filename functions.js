@@ -28,7 +28,7 @@ function searchFilm(userInput) {
     //calling the api with the parameters t and r titel and type
 
     $.ajax({
-        url:"http://www.omdbapi.com/?i=tt3896198&apikey=add9ad8f",
+        url:"http://www.omdbapi.com/?i=tt3896198&apikey=df305af",
         data:{
             s:'"' + userInput + '"',
             r: "json"
@@ -228,14 +228,14 @@ function displayMedia(allFiles){
              var img = "<img src=" + allFiles[i].path + " width='320' >";
              //puts variables in the HTML
              $("#gallery").append(
-               "<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+               "<div class='imgage col-md-3 col-lg-3'> "+
                "<figure class='img'>" + img + "<p>" + title + "</p></figure>" +
                "</a>" +
                "</div> <!-- col-6 / end -->");
            }
            else if(allFiles[i].type == "audio"){
                $("#gallery").append(
-                   "<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+                   "<div class='audio col-md-3 col-lg-3'> "+
                    "<figure class='img'>" + "<img src='images/audioIcon.jpg' width='320' ></figure>" +
                    "<audio controls><source src='" + allFiles[i].path + "' type='audio/mpeg'>Your browser does not support the audio tag.</audio>" +
                    "<p>" + title + "</p>" +
@@ -244,7 +244,7 @@ function displayMedia(allFiles){
            }
            else if (allFiles[i].type == "video"){
                $("#gallery").append(
-                   "<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'> "+
+                   "<div class='video col-md-3 col-lg-3'> "+
                    "<video class='vid' controls><source src='" + allFiles[i].path + "' type='video/mp4'></video>" +
                    "<p>" + title + "</p>"+
                    "</a>" +

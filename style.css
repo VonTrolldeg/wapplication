@@ -10,25 +10,18 @@ body{
 
 
 .blueBG {
+    background-color: #fff;
+    height: 70px;
     text-align: center;
-    padding: 20%;
+    border-radius: 15px;
 }
 
 .darkBG {
     background: #404344;
 }
 
-#weather {
-
-}
-#favorite {
-}
-
-#film {
-
-}
-
-#whatMedia {
+.centerText{
+    text-align: center;
 }
 
 .filmDisplay {
@@ -53,11 +46,20 @@ body{
 
 }
 
+.media-buttons {
+    text-align: center;
+}
+
+.audio, .video, .imgage {
+    text-align: center;
+}
+.marginAuto {
+    margin: auto;
+}
+
 .midButton {
     width: 160px;
     height: 40px;
-    margin: 10px;
-    padding: 40px;
     text-align: center;
 
 }
