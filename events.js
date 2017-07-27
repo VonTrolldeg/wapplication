@@ -106,7 +106,6 @@ $("#selectType").change(function(){
     //lol error handling
     selectedType = "image";
   }
-  console.log(selectedType);
   var html = '<input type="file" id="replace" name="media" accept="' +selectedType+'/*" class="btn btn-default">';
   $("#replace").replaceWith(html);
 });
