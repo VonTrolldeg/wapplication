@@ -4,9 +4,10 @@
 
 
 /*
-
-Make it possible to adda movie to favourites.
-When I now press make favourites nothing happens and I am too tird to solve it¨
+1 TODO fixa att poster är undifined hela tiden sök på typ hej och kolla konsollen
+TODO when a poster is not found add a black image
+TODO Make it possible to adda movie to favourites.
+TODO add a html wiht hte info form local storage
 */
 
 function searchFilm(searchInput) {
@@ -39,16 +40,16 @@ function addResults (results) {
   for (var i = 0; i < results.length; i++) {
     var title = results[i].title;
     var year = results[i].release_date;
-    var poster = results[i].poster_path;
-    var film = {title: title, year: year , poster:"http://image.tmdb.org/t/p/w185/" + poster};
-    movieResult[i] = film;
+    var poster = "http://image.tmdb.org/t/p/w185/" + results[i].poster_path;
+    var film = {title: title, year: year , poster: poster};
 
+    movieResult[i] = film ;
   }
   for (var i = 0; i < 10; i++) {
     var html = '<div class="col-md-4">' +
         '<div class="card">' +
           '<div class="card-block">' +
-            '<img class="rounded mx-auto d-block" src="' + movieResult[i].poster +'"'+ 'alt="Interstellar Poster">' +
+            '<img class="rounded mx-auto d-block" src="' + movieResult[i].poster +'"'+ 'alt="There is no poster">' +
             '<h4 class="text-center">' + movieResult[i].title + '</h4>' +
             '<p class="text-center">' + movieResult[i].year + '</p>' +
             '<button type="button" id="makeFavourite" class="btn btn-secondary">Make favourite</button>' +
@@ -57,25 +58,33 @@ function addResults (results) {
       '</div>';
       $("#cards").append(html);
   }
-
 }
 
 
-function makeFavourite() {
-    //when you hit favvo movie its supposed to overwrite the current favvo movie
-    var favvoTitel = $("#Titel").html();
-    var favvoYear = $("#Year").html();
-    var favouriteThis = {titel: favvoTitel, year: favvoYear, time: favvoTime};
+function makeFavourite(favouriteThis) {
     //add to localStorage
+    console.log("making this favourite");
     var JSONfavourite = JSON.stringify(favouriteThis);
     localStorage.setItem("favourite", JSONfavourite);
 }
 
 function viewFavourite() {
     //get the favourite titel
+    console.log("viewFavourite");
     var favouriteFilm = JSON.parse(localStorage.getItem("favourite"));
+
     if (favouriteFilm != undefined) {
-        $("#titel").text(favouriteFilm.titel);
-        $("#year").text(favouriteFilm.year);
+    $("#cards").empty();
+    var html = '<div class="col-md-4">' +
+        '<div class="card">' +
+          '<div class="card-block">' +
+            '<h3 class="text-center"> Your favourite </h3>' +
+            '<img class="rounded mx-auto d-block" src="' + favouriteFilm.poster +'"'+ 'alt="There is no poster">' +
+            '<h4 class="text-center">' + favouriteFilm.title + '</h4>' +
+            '<p class="text-center">' + favouriteFilm.year + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+      $("#cards").append(html);
     }
 }

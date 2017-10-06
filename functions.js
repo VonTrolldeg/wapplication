@@ -1,6 +1,10 @@
 
+/*
+TODO lägg till en svart bild om den inte hittar bilden
+TODO kolla så filmen sparas i local storage och kan Hämtas
+*/
+
 function printMovies(){
-  /* @TODO Skriver ut alla filmerna i vår array "movies" */
   $("ul li").remove();
   for (var i = 0; i < movies.length; i++){
     $("ul").append("<li>" + movies[i].title + " - " + movies[i].grade + "</li>");
@@ -116,11 +120,7 @@ function displayArchive() {
 
 }
 
-function makeFavourite() {
-    //when you hit favvo movie its supposed to overwrite the current favvo movie
-    var favvoTitel = $("#Titel").html();
-    var favvoYear = $("#Year").html();
-    var favouriteThis = {titel: favvoTitel, year: favvoYear, time: favvoTime};
+function makeFavourite(favouriteThis) {
     //add to localStorage
     var JSONfavourite = JSON.stringify(favouriteThis);
     localStorage.setItem("favourite", JSONfavourite);
