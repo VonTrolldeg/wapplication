@@ -36,6 +36,7 @@ function searchFilm(searchInput) {
 
 
 function addResults (results) {
+
   var movieResult = [];
   for (var i = 0; i < results.length; i++) {
     var title = results[i].title;
@@ -53,6 +54,7 @@ function addResults (results) {
             '<h4 class="text-center">' + movieResult[i].title + '</h4>' +
             '<p class="text-center">' + movieResult[i].year + '</p>' +
             '<button type="button" id="makeFavourite" class="btn btn-secondary">Make favourite</button>' +
+            '<button type="button" id="saveToArchive" class="btn btn-secondary">Save</button>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -63,19 +65,17 @@ function addResults (results) {
 
 function makeFavourite(favouriteThis) {
     //add to localStorage
-    console.log("making this favourite");
     var JSONfavourite = JSON.stringify(favouriteThis);
     localStorage.setItem("favourite", JSONfavourite);
 }
 
 function viewFavourite() {
     //get the favourite titel
-    console.log("viewFavourite");
     var favouriteFilm = JSON.parse(localStorage.getItem("favourite"));
 
     if (favouriteFilm != undefined) {
     $("#cards").empty();
-    var html = '<div class="col-md-4">' +
+    var html = '<div class=".col-md-offset-4">' +
         '<div class="card">' +
           '<div class="card-block">' +
             '<h3 class="text-center"> Your favourite </h3>' +
@@ -86,5 +86,75 @@ function viewFavourite() {
         '</div>' +
       '</div>';
       $("#cards").append(html);
+    }
+}
+
+function saveToArchive(archiveThis) {
+    //gets the film titel and year about the film and saves it to the archiv
+    var archivedFilms = JSON.parse(localStorage.getItem("archive"));
+    if (archivedFilms === null) {
+        archiveList = [archiveThis];
+        var JSONArchive = JSON.stringify(archiveList);
+        localStorage.setItem("archive", JSONArchive);
+    }
+    else{
+        archivedFilms.push(archiveThis);
+        //saves a new verion of the archive over the old version
+        var JSONArchive = JSON.stringify(archivedFilms);
+        localStorage.setItem("archive", JSONArchive);
+    }
+}
+
+function viewArchive(){
+    //gets the data from archive in local storages and adds it to cars and then to the HTML
+    var archivedFilms = JSON.parse(localStorage.getItem("archive"));
+    if (archivedFilms === null) {
+        $("#cards").empty();
+		$("#cards").append("<h4>You have no movies saved in you archive <h4>");
+	}
+    else {
+        $("#cards").empty();
+        for (var i = 0; i < archivedFilms.length; i++) {
+          var html = '<div class="col-md-4">' +
+              '<div class="card">' +
+                '<div class="card-block">' +
+                  '<img class="rounded mx-auto d-block" src="' + archivedFilms[i].poster +'"'+ 'alt="There is no poster">' +
+                  '<h4 class="text-center">' + archivedFilms[i].title + '</h4>' +
+                  '<p class="text-center">' + archivedFilms[i].year + '</p>' +
+                  '<button type="button" id="makeFavourite" class="btn btn-secondary">Make favourite</button>' +
+                  "<button type='button' id='"+ i +"' class='remove btn btn-secondary'>remove</button>" +
+                '</div>' +
+              '</div>' +
+            '</div>';
+            $("#cards").append(html);
+        }
+    }
+}
+
+function removeFilm(number) {
+  //TODO titeln är nyckel på filmen jag vill ta bort
+    //find the film on that spot and remove it
+    var archivedFilms = JSON.parse(localStorage.getItem("archive"));
+
+    if (archivedFilms != undefined) {
+            archivedFilms.splice(number, 1);
+    }
+    //set the new object to local storage
+    var JSONArchive = JSON.stringify(archivedFilms);
+    localStorage.setItem("archive", JSONArchive);
+    $("#cards").empty();
+    for (var i = 0; i < archivedFilms.length; i++) {
+      var html = '<div class="col-md-4">' +
+          '<div class="card">' +
+            '<div class="card-block">' +
+              '<img class="rounded mx-auto d-block" src="' + archivedFilms[i].poster +'"'+ 'alt="There is no poster">' +
+              '<h4 class="text-center">' + archivedFilms[i].title + '</h4>' +
+              '<p class="text-center">' + archivedFilms[i].year + '</p>' +
+              '<button type="button" id="makeFavourite" class="btn btn-secondary">Make favourite</button>' +
+              "<button type='button' id='"+ i +"' class='remove btn btn-secondary'>remove</button>" +
+            '</div>' +
+          '</div>' +
+        '</div>';
+        $("#cards").append(html);
     }
 }

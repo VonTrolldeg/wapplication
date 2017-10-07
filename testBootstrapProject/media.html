@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon-precomposed" href="images/icon.png">
+    <link rel="apple-touch-startup-image" href="images/icon.png">
+    <link rel="icon" href="images/icon.png">
+
+
+    <link rel="stylesheet" href="style.css">
+
+    <title></title>
+  </head>
+  <body>
+      <div class="nav">
+          <div id="navPadding" class="container">
+              <ul>
+                  <li><a href="index.html"><img src="images/icon.png" alt="triangle home button" width="23px" height="23px"></a></li>
+                  <li id="art"><a href="film.html">FILM</a></li>
+                  <li id="navMedia"><a href="media.html">MEDIA</a></li>
+              </ul>
+          </div>
+      </div>
+
+      <div class="header">
+          <div class="container">
+              <h1>Media</h1>
+               <button type="button" id="uploadMedia" class="midButton btn btn-default">Upload Media</button>
+               <button type="button" id="viewMedia" class="midButton btn btn-default">View Media</button>
+      </div>
+    </div>
+      <!-- upload and view media-->
+     <div class="buttonsMedia">
+         <div id="whatMedia" class="row">
+             <div class="container">
+                 <div class="btn-group col-md-4 col-offset-4">
+                     <div class="col-md-4 text-center">
+                        <button type="button" id="pictureButton" class="btn btn-default custom-button-width">Pictures</button>
+                    </div>
+                    <div class="col-md-4 text-center">
+                       <button type="button" id="videoButton" class="btn btn-default custom-button-width">Video</button>
+                   </div>
+                   <div class="col-md-4 text-center">
+                      <button type="button" id="audioButton" class="btn btn-default custom-button-width">Audio</button>
+                  </div>
+                 </div>
+
+             </div>
+         </div>
+     </div>
+
+     <div class="uploadMedia">
+         <div class="row">
+             <div id="uploading" class="container">
+
+               <form id="mediaForm" action="server.php" enctype="multipart/form-data" method="post" class="navbar-form navbar-left" role="search">
+                 <!-- listen to changes in this select and add an accept attribute to the file selector thingy-->
+                 <select id="selectType" name="type" class="form-control">
+                   <option value="">select media type</option>
+                   <option value="photo">photo</option>
+                   <option value="video">video</option>
+                   <option value="audio">audio</option>
+                 </select>
+
+                 <div id="chooseFile" class="form-group">
+                   <p id="replace"> </p>
+                 </div>
+                 <strong>Name your file:</strong><input type="text" name="title">
+                 <button type="submit" id="saveMedia" value="Spara media" class="btn btn-default">Submit</button>
+               </form>
+               <p id="status"> </p>
+             </div>
+
+         </div>
+     </div>
+
+    <div id="viewing" class="container">
+      <div class="row">
+          <div id="gallery" class='list-group gallery'>
+
+          </div> <!-- list-group / end -->
+      </div> <!-- row / end -->
+    </div> <!-- container / end -->
+
+    <div id="statusDiv" class="container">
+      <div class="row">
+        <h2 id="status"></h2>
+      </div>
+    </div>
+
+
+
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="events.js"></script>
+      <script type="text/javascript" src="media.js"></script>
+      <script type="text/javascript" src="film.js"></script>
+  </body>
+</html>
